@@ -1,6 +1,4 @@
 // @flow
-import fetch from 'better-fetch'
-
 export type SetName = {
     type : "SET_NAME",
     name : string
@@ -55,13 +53,13 @@ type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) =
 
 export const startGame = (name : string) : ThunkAction => async (dispatch : Dispatch, getState : GetState) => {
     dispatch({ type : "STARTING_GAME"})
-    const response = await fetch("/games", { method : "POST"})
+    const response = await fetch("/game", { method : "POST", body : JSON.stringify({ player_name : name })})
     
     if(!response.ok) {
         return dispatch({ type : "STARTING_GAME_FAILED"})
     }
     
-    const body = response.json();
+    const body = await response.json();
 
     return dispatch({ type : "STARTED_GAME", id : body.id})
 }

@@ -6,7 +6,8 @@ import logo from "./logo.jpg"
 class LandingPage extends Component {
 
   handleStartGame = (name) => {
-    console.log(`${name} want to start a Game`)
+    this.props.startGame(name)
+      .then(game => this.props.history.push(`/${game.id}`))
   }
 
   handleJoinGame = (name, code) => {

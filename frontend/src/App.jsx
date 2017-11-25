@@ -2,17 +2,20 @@ import React from 'react';
 import { render } from 'react-dom';
 import { connect, Provider } from 'react-redux'
 import Button from 'material-ui/Button';
-import LandingPage from './components/LandingPage/LandingPage';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './reducers'
 import * as actions from './actions';
+
+import LandingPage from './components/LandingPage/LandingPage';
+import GamePage from './components/GamePage';
 
 const loggerMiddleware = createLogger()
 
@@ -26,7 +29,8 @@ const store = createStore(
 )
 
 
-const landingPage = connect(null, {...actions} )(LandingPage)
+const landingPage = connect(null, {...actions} )(withRouter(LandingPage))
+const gamePage = connect(null, {...actions} )(withRouter(GamePage))
 
 
 
@@ -36,6 +40,7 @@ function App() {
       <Router>
         <div>
           <Route exact path="/" component={landingPage} />
+          <Route exact path="/:id" component={gamePage} />
         </div>
       </Router>
     </Provider>

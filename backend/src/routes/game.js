@@ -12,6 +12,7 @@ const create = async(db, log, gameManager, ctx, next) => {
   let newGame = gameManager.create();
   log.info('Creating game', newGame, ctx.request.body.player_name);
   if (ctx.request.body.player_name) {
+    console.log(ctx.request.body.player_name)
     const player = gameManager.createPlayer(ctx.request.body.player_name);
     log.debug('Created', player);
     newGame = gameManager.join(newGame.id, player.id);
