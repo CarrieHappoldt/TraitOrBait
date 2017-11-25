@@ -3,6 +3,7 @@ import StartGame from "./StartGame"
 import JoinGame from "./JoinGame"
 import logo from "./logo.jpg"
 
+
 class LandingPage extends Component {
 
   handleStartGame = (name) => {
