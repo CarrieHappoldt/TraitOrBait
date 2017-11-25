@@ -49,6 +49,10 @@ class JoinGame extends Component {
   handleOnNameChange = (event) => {
     this.setState({ name : event.target.value })
   }
+
+  handleOnCancel = () => {
+    this.setState({ open: false });
+  }
   
   render(){
     return (
@@ -59,7 +63,7 @@ class JoinGame extends Component {
             raised 
             color="primary"
             onClick={this.handleClickOpen}
-            >Start</Button>
+            >Join</Button>
           <Dialog open={this.state.open}>
           <form onSubmit={this.handleOnSubmit}>  
           <DialogTitle>Join a Game</DialogTitle>
@@ -71,15 +75,16 @@ class JoinGame extends Component {
               autoFocus
               margin="dense"
               id="name"
-              label="name"
+              label="Your Name"
               onChange={this.handleOnNameChange}
               fullWidth
             />
             <TextField
               margin="dense"
               id="code"
-              label="code"
+              label="Game Code"
               onChange={this.handleOnCodeChange}
+              helperText="Game code must be 6 characters long"
               fullWidth
             />
           </DialogContent>
@@ -91,6 +96,12 @@ class JoinGame extends Component {
               type="submit"
               >
               Join
+            </Button>
+            <Button 
+              onClick={this.handleOnCancel} 
+              color="default"
+              >
+              Cancel
             </Button>
           </DialogActions>
           </form>

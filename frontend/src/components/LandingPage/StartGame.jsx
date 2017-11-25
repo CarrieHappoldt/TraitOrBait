@@ -13,7 +13,8 @@ class StartGame extends Component {
     super(props);
     this.state = {
       name: '',
-      open: false
+      open: false,
+      disabled: true
     }
   }
   handleClickOpen = () => {
@@ -27,7 +28,20 @@ class StartGame extends Component {
   };
 
   handleOnNameChange = (event) => {
-    this.setState({ name : event.target.value })
+    let newState = this.state
+    if(this.state.name){
+      newState.name = event.target.value
+      newState.disabled = false
+      this.setState({newState})
+    } else {
+      newState.name = event.target.value
+      newState.disabled = true
+      this.setState({newState})
+    }
+  }
+
+  handleOnCancel = () => {
+    this.setState({ open: false });
   }
 
   render(){
@@ -50,15 +64,26 @@ class StartGame extends Component {
               autoFocus
               margin="dense"
               id="name"
-              label="name"
-              type="name"
+              label="Your Name"
               onChange={this.handleOnNameChange}
+              helperText="Your name is required"
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleOnSumbit} color="primary" type="submit">
+            <Button 
+              onClick={this.handleOnSumbit} 
+              color="primary" 
+              type="submit"
+              disabled={this.state.disabled}
+              >
               State Game
+            </Button>
+             <Button 
+              onClick={this.handleOnCancel} 
+              color="default" 
+              >
+              Cancel
             </Button>
           </DialogActions>
          </form> 
