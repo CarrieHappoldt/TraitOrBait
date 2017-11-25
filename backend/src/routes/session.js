@@ -7,10 +7,10 @@ const router = new Router({
 });
 
 const join = async(db, log, gameManager, ctx) => {
-  const player = gameManager.createPlayer(ctx.session.id, ctx.request.body.name);
+  const player = gameManager.createPlayer(ctx.request.body.name);
   ctx.session.id = player.id;
   log.info('Creating session', ctx.session.id, 'name', ctx.request.body.name)
-  ctx.body = gameManager.join(ctx.request.body.name, player.id);
+  ctx.body = gameManager.join(ctx.request.body.id, player.id);
 }
 
 const get = async(db, log, ctx, next) => {

@@ -54,7 +54,7 @@ const join = (gameDb, log, id, playerId) => {
     id
   });
   if (!game)
-    throw new Error('game not found');
+    throw new Error('game not found', id);
 
   game.players.push(playerId);
 
