@@ -8,7 +8,8 @@ export type SetName = {
 
 export type JoinGame = {
     type : "JOIN_GAME",
-    id : string
+    gameId : string,
+    name : string
 }
 
 export type StartingGame = {
@@ -52,7 +53,7 @@ type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) =
 
 
 
-export const startGame = () : ThunkAction => async (dispatch : Dispatch, getState : GetState) => {
+export const startGame = (name : string) : ThunkAction => async (dispatch : Dispatch, getState : GetState) => {
     dispatch({ type : "STARTING_GAME"})
     const response = await fetch("/games", { method : "POST"})
     
@@ -70,7 +71,8 @@ export const setName = (name : string) : SetName => ({
     name
 })
 
-export const joinGame = (id : string) : JoinGame => ({
+export const joinGame = (gameId : string, name : string) : JoinGame => ({
     type : "JOIN_GAME",
-    id
+    gameId,
+    name
 })
