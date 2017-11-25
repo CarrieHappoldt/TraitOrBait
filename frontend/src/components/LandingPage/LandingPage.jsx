@@ -5,8 +5,8 @@ import logo from "./logo.jpg"
 
 class LandingPage extends Component {
 
-  handleStartGame = () => {
-    console.log("I want to start a Game")
+  handleStartGame = (name) => {
+    console.log(`${name} want to start a Game`)
   }
 
   handleJoinGame = (code) => {
