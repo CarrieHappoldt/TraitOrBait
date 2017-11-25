@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -20,21 +19,21 @@ class JoinGame extends Component {
     }
   }
 
-  handleOnChange = (event) => {
+  handleOnCodeChange = (event) => {
     let newState = this.state
     newState.code = event.target.value
     if(this.state.code.length > 5){
       newState.disabled = false;
+      this.setState({newState})
     } if(this.state.code.length < 5){
       newState.disabled = true;
+      this.setState({newState})
     }
-    this.setState({newState})
   }
 
   checkValidation = (event) => {
-    event.preventDefault();
     if(this.state.code.length > 5){
-      this.props.handleJoinGame(this.state.code);
+      this.props.handleJoinGame(this.state.name, this.state.code);
     } 
   }
   handleClickOpen = () => {
@@ -42,7 +41,7 @@ class JoinGame extends Component {
   };
 
   handleOnClick = () => {
-    this.props.handleStartGame(this.state.name);
+    this.checkValidation();
     this.setState({ open: false });
   };
 
@@ -54,33 +53,42 @@ class JoinGame extends Component {
     return (
       <div>
         <div>
-        <p>Enter your code here to join a game</p>
+        <p>Click here to Join an exstisting game</p>
         <form onSubmit={this.checkValidation} noValidate autoComplete="off">
-          <Button
-            type='submit' 
+          <Button 
             raised 
             color="primary"
-            disabled={this.state.disabled}
+            onClick={this.handleClickOpen}
             >Start</Button>
-            <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
-          <DialogTitle>Create a Game</DialogTitle>
+            <Dialog open={this.state.open}>
+          <DialogTitle>Join a Game</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To create a game, please enter your name here. We will send you a code that you can share for others to join.
+              To join a game, please enter your name here and the game code
             </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
               label="name"
-              type="name"
               onChange={this.handleOnNameChange}
+              fullWidth
+            />
+            <TextField
+              margin="dense"
+              id="code"
+              label="code"
+              onChange={this.handleOnCodeChange}
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleOnClick} color="primary">
-              State Game
+            <Button 
+              onClick={this.handleOnClick} 
+              color="primary"
+              disabled={this.state.disabled}
+              >
+              Join
             </Button>
           </DialogActions>
         </Dialog>

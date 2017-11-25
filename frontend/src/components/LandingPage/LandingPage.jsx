@@ -9,8 +9,8 @@ class LandingPage extends Component {
     console.log(`${name} want to start a Game`)
   }
 
-  handleJoinGame = (code) => {
-    console.log(`I want to join a game and here is my ${code}`)
+  handleJoinGame = (name, code) => {
+    console.log(`${name} want to join a game and here is my ${code}`)
   }
 
   render(){

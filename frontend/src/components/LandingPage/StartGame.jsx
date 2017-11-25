@@ -38,7 +38,7 @@ class StartGame extends Component {
           color="primary"
           onClick={this.handleClickOpen}
           >Start</Button>
-        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+        <Dialog open={this.state.open}>
           <DialogTitle>Create a Game</DialogTitle>
           <DialogContent>
             <DialogContentText>
