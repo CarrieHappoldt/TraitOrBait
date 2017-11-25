@@ -20,7 +20,8 @@ class StartGame extends Component {
     this.setState({ open: true });
   };
 
-  handleOnClick = () => {
+  handleOnSubmit = (event) => {
+    event.preventDefault();
     this.props.handleStartGame(this.state.name);
     this.setState({ open: false });
   };
@@ -39,6 +40,7 @@ class StartGame extends Component {
           onClick={this.handleClickOpen}
           >Start</Button>
         <Dialog open={this.state.open}>
+          <form onSubmit={this.handleOnSubmit}>
           <DialogTitle>Create a Game</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -55,10 +57,11 @@ class StartGame extends Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleOnClick} color="primary">
+            <Button onClick={this.handleOnSumbit} color="primary" type="submit">
               State Game
             </Button>
           </DialogActions>
+         </form> 
         </Dialog>
       </div>
      ); 

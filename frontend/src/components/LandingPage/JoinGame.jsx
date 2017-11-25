@@ -40,7 +40,8 @@ class JoinGame extends Component {
     this.setState({ open: true });
   };
 
-  handleOnClick = () => {
+  handleOnSubmit = (event) => {
+    event.preventDefault();
     this.checkValidation();
     this.setState({ open: false });
   };
@@ -54,13 +55,13 @@ class JoinGame extends Component {
       <div>
         <div>
         <p>Click here to Join an exstisting game</p>
-        <form onSubmit={this.checkValidation} noValidate autoComplete="off">
           <Button 
             raised 
             color="primary"
             onClick={this.handleClickOpen}
             >Start</Button>
-            <Dialog open={this.state.open}>
+          <Dialog open={this.state.open}>
+          <form onSubmit={this.handleOnSubmit}>  
           <DialogTitle>Join a Game</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -84,15 +85,16 @@ class JoinGame extends Component {
           </DialogContent>
           <DialogActions>
             <Button 
-              onClick={this.handleOnClick} 
+              onClick={this.handleOnSubmit} 
               color="primary"
               disabled={this.state.disabled}
+              type="submit"
               >
               Join
             </Button>
           </DialogActions>
+          </form>
         </Dialog>
-       </form> 
       </div>
       </div>
     )
