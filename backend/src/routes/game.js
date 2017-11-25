@@ -21,7 +21,7 @@ const create = async(db, log, gameManager, ctx, next) => {
   }
   ctx.body = {
     game: newGame,
-    player_id: player.id
+    player_id: player && player.id
   }
 }
 
