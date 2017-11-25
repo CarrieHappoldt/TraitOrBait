@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "flow-bin": "^0.59.0",
     "material-ui": "^1.0.0-beta.21",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
@@ -10,6 +11,7 @@
     "react-scripts": "1.0.17"
   },
   "scripts": {
+    "flow" : "flow",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
