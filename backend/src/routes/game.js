@@ -11,14 +11,18 @@ const router = new Router({
 const create = async(db, log, gameManager, ctx, next) => {
   let newGame = gameManager.create();
   log.info('Creating game', newGame, ctx.request.body.player_name);
+  let player;
   if (ctx.request.body.player_name) {
-    console.log(ctx.request.body.player_name)
-    const player = gameManager.createPlayer(ctx.request.body.player_name);
+    player = gameManager.createPlayer(ctx.request.body.player_name);
+    ctx.session.id = player.id;
     log.debug('Created', player);
     newGame = gameManager.join(newGame.id, player.id);
     log.debug('new game', newGame);
   }
-  ctx.body = newGame;
+  ctx.body = {
+    game: newGame,
+    player_id: player.id
+  }
 }
 
 const get = async(db, log, gameManager, ctx, next) => {
