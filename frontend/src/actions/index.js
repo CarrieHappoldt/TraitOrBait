@@ -16,7 +16,8 @@ export type StartingGame = {
 
 export type StartedGame = {
     type : "STARTED_GAME",
-    id : string
+    id : string,
+    playerId : string
 }
 
 export type StartingGameFailed = {
@@ -50,10 +51,15 @@ type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
 
 
+const headers = {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+}
+
 
 export const startGame = (name : string) : ThunkAction => async (dispatch : Dispatch, getState : GetState) => {
     dispatch({ type : "STARTING_GAME"})
-    const response = await fetch("/game", { method : "POST", body : JSON.stringify({ player_name : name })})
+    const response = await fetch("/game", { method : "POST", headers, body : JSON.stringify({ player_name : name })})
     
     if(!response.ok) {
         return dispatch({ type : "STARTING_GAME_FAILED"})
@@ -61,7 +67,7 @@ export const startGame = (name : string) : ThunkAction => async (dispatch : Disp
     
     const body = await response.json();
 
-    return dispatch({ type : "STARTED_GAME", id : body.id})
+    return dispatch({ type : "STARTED_GAME", id : body.game.id, playerId : body.player_id})
 }
 
 export const setName = (name : string) : SetName => ({

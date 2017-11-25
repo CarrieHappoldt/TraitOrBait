@@ -7,7 +7,7 @@ class LandingPage extends Component {
 
   handleStartGame = (name) => {
     this.props.startGame(name)
-      .then(game => this.props.history.push(`/${game.id}`))
+      .then(res => this.props.history.push(`/${res.id}`))
   }
 
   handleJoinGame = (name, code) => {
