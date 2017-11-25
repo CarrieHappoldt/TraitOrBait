@@ -4,6 +4,30 @@
 
 const loki = require('lokijs');
 
-const db = new loki('tb.json');
+let games = {};
+let players = {};
 
-module.exports = db;
+const databaseInitialize = (callback) => {
+  games = db.getCollection("games");
+  if (games === null) {
+    games = db.addCollection("games");
+  }
+  players = db.getCollection("players");
+  if (players === null) {
+    players = db.addCollection("players");
+  }
+  callback();
+}
+let db;
+module.exports = (callback) => {
+  db = new loki('tb.json', {
+    autoload: true,
+    autoloadCallback: () => databaseInitialize(callback),
+    autosave: true,
+    autosaveInterval: 4000
+  })
+  return {
+    games: () => games,
+    players: () => players,
+  }
+};

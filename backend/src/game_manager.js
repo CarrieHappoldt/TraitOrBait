@@ -1,4 +1,5 @@
 const curry = require('curry');
+const uuid = require('uuid');
 
 const filter = (inObj) => {
   if (!inObj)
@@ -59,13 +60,19 @@ const join = (gameDb, log, id, playerId) => {
 
 }
 
-const createPlayer = (playerDb, log, playerId, playerName) => {
-  const player = playerDb.findOne({
-    id: playerId
-  });
-  log.warn(player);
-  if (player)
-    throw new Error('Cannot create a new player with the same id');
+const createPlayer = (playerDb, log, playerName) => {
+  let playerId = uuid.v4();
+  let player = undefined;
+  while (true) {
+    player = playerDb.findOne({
+      id: playerId
+    });
+    if (!player) {
+      break;
+    }
+    playerId = uuid.v4();
+  }
+
   playerDb.insert({
     id: playerId,
     name: playerName
@@ -81,6 +88,6 @@ module.exports = (gameDb, playerDb, log) => {
     get: curry.to(3, get)(gameDb, log),
     create: () => create(gameDb, log),
     join: curry.to(4, join)(gameDb, log),
-    createPlayer: curry.to(4, createPlayer)(playerDb, log)
+    createPlayer: curry.to(3, createPlayer)(playerDb, log)
   }
 }
